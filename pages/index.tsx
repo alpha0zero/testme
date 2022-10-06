@@ -6,9 +6,7 @@ const Home: NextPage = () => {
   return (
     <>
       <DrawerAppBar />
-      <div>
-        <Button variant="contained"> TEST </Button>
-      </div>
+      <div></div>
     </>
   );
 };
