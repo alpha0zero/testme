@@ -28,7 +28,7 @@ export default function ButtonAppBar() {
               Login
             </Button>
           </Link>
-          <Link href="signup">
+          <Link href="/signup">
             <Button color="inherit">
               {/* <IconButton edge="start" color="inherit" aria-label="menu">
               <VpnKeyIcon />
