@@ -17,7 +17,7 @@ const Home: NextPage = () => {
           pb: 6,
         }}
       >
-        <Container maxWidth="sm" sx={{ width: "100vh" }}>
+        <Container maxWidth="sm">
           <Typography
             component="h1"
             variant="h2"

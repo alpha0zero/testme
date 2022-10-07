@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import RadioGroup from "../components/RadioGroup";
 import ButtonAppBar from "../components/AppBar";
+import Link from "next/link";
 
 const SignUp = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -107,9 +108,11 @@ const SignUp = () => {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <MuiLink href="/login" variant="body2">
-                  Already have an account? Sign in
-                </MuiLink>
+                <Link href="/login">
+                  <MuiLink variant="body2" sx={{ cursor: "pointer" }}>
+                    Already have an account? Sign in
+                  </MuiLink>
+                </Link>
               </Grid>
             </Grid>
           </Box>

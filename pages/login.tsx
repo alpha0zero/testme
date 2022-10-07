@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ButtonAppBar from "../components/AppBar";
+import Link from "next/link";
 
 const Login = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -90,9 +91,11 @@ const Login = () => {
                 </MuiLink>
               </Grid>
               <Grid item>
-                <MuiLink href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </MuiLink>
+                <Link href="/signup">
+                  <MuiLink variant="body2" sx={{ cursor: "pointer" }}>
+                    {"Don't have an account? Sign Up"}
+                  </MuiLink>
+                </Link>
               </Grid>
             </Grid>
           </Box>
