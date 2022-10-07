@@ -13,16 +13,18 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ButtonAppBar from "../components/AppBar";
 import Link from "next/link";
+import axios from "axios";
 
 const Login = () => {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+
+    const { user }: any = await axios.post("/api/loginchecker", {
       email: data.get("email"),
       password: data.get("password"),
-      remembered: data.get("remembered"),
     });
+    console.log(user);
   };
 
   return (
