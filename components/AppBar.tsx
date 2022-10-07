@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative">
+      <AppBar position="fixed">
         <Toolbar>
           <Link href="/">
             <Typography

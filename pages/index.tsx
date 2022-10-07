@@ -12,27 +12,29 @@ const Home: NextPage = () => {
       <DrawerAppBar />
       <Box
         sx={{
-          bgcolor: "background.paper",
           pt: 8,
           pb: 6,
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
         }}
       >
         <Container maxWidth="sm">
           <Typography
+            style={{
+              fontWeight: "bold",
+              background: "linear-gradient(to right, #30CFD0 0%, #330867 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
             component="h1"
             variant="h2"
             align="center"
-            color="text.primary"
             gutterBottom
           >
             Test me.
           </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="text.secondary"
-            paragraph
-          >
+          <Typography variant="h5" align="center" paragraph>
             A fast way to create test for your students. talk to everyone with
             our real time chat. take tests as fast as possible. tests made easy
             with our plateform.
