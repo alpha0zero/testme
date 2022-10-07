@@ -17,12 +17,13 @@ const SignUp = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
     console.log({
       email: data.get("email"),
       password: data.get("password"),
       firstName: data.get("firstName"),
       lastName: data.get("lastName"),
-      membership: data.get("radioGroup"),
+      isTeacher: data.get("radioGroup") === "teacher" ? true : false,
     });
   };
 
@@ -65,7 +66,6 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  required
                   fullWidth
                   id="lastName"
                   label="Last Name"
