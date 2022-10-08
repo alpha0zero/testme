@@ -13,19 +13,27 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ButtonAppBar from "../components/AppBar";
 import Link from "next/link";
-import axios from "axios";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 const Login = () => {
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const { user }: any = await axios.post("/api/loginchecker", {
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    console.log(user);
-  };
+  const validationSchema = yup.object({
+    email: yup
+      .string()
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup.string().min(8).required("Password is required"),
+  });
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   return (
     <>
@@ -48,11 +56,15 @@ const Login = () => {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
             <TextField
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
               margin="normal"
               required
               fullWidth
@@ -63,6 +75,10 @@ const Login = () => {
               autoFocus
             />
             <TextField
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
               margin="normal"
               required
               fullWidth

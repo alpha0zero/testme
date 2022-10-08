@@ -1,4 +1,3 @@
-import { FormEvent } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,24 +8,40 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import RadioGroup from "../components/RadioGroup";
+import MuiRadioGroup from "@mui/material/RadioGroup";
 import ButtonAppBar from "../components/AppBar";
 import Link from "next/link";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { NextPage } from "next";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
 
-const SignUp = () => {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      firstName: data.get("firstName"),
-      lastName: data.get("lastName"),
-      isTeacher: data.get("radioGroup") === "teacher" ? true : false,
-    });
-  };
-
+const SignUp: NextPage = () => {
+  const validationSchema = yup.object({
+    email: yup
+      .string()
+      .email("Enter a valid email")
+      .required("Email is required"),
+    password: yup.string().min(8).required("Password is required"),
+    firstName: yup.string().max(25).required("First Name is required"),
+    lastName: yup.string().max(25).required("Last Name is required"),
+  });
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      membership: "student",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
   return (
     <>
       <ButtonAppBar />
@@ -47,14 +62,25 @@ const SignUp = () => {
             Sign up
           </Typography>
           <Box
+            onSubmit={(e) => {
+              e.preventDefault();
+              formik.handleSubmit(e);
+            }}
             component="form"
             noValidate
-            onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  value={formik.values.firstName}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.firstName && Boolean(formik.errors.firstName)
+                  }
+                  helperText={
+                    formik.touched.firstName && formik.errors.firstName
+                  }
                   autoComplete="given-name"
                   name="firstName"
                   required
@@ -66,6 +92,12 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  value={formik.values.lastName}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.lastName && Boolean(formik.errors.lastName)
+                  }
+                  helperText={formik.touched.lastName && formik.errors.lastName}
                   fullWidth
                   id="lastName"
                   label="Last Name"
@@ -75,7 +107,10 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -85,7 +120,12 @@ const SignUp = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
                   fullWidth
                   name="password"
                   label="Password"
@@ -95,7 +135,29 @@ const SignUp = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <RadioGroup />
+                <FormControl>
+                  <FormLabel id="demo-row-radio-buttons-group-label">
+                    YOU ARE:
+                  </FormLabel>
+                  <MuiRadioGroup
+                    value={formik.values.membership}
+                    onChange={formik.handleChange}
+                    row
+                    aria-labelledby="demo-row-radio-buttons-group-label"
+                    name="membership"
+                  >
+                    <FormControlLabel
+                      value="student"
+                      control={<Radio />}
+                      label="Student"
+                    />
+                    <FormControlLabel
+                      value="teacher"
+                      control={<Radio />}
+                      label="Teacher"
+                    />
+                  </MuiRadioGroup>
+                </FormControl>
               </Grid>
             </Grid>
             <Button

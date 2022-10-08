@@ -11,7 +11,7 @@ const RadioGroup = () => {
       <MuiRadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
-        name="radioGroup"
+        name="membership"
       >
         <FormControlLabel value="student" control={<Radio />} label="Student" />
         <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
