@@ -12,13 +12,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ButtonAppBar from "../components/AppBar";
 import Link from "next/link";
+import CircularProgress from "@mui/material/CircularProgress";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import Alert from "@mui/material/Alert";
+
+type Status = "loading" | "loaded" | "unloaded";
 
 const Login = () => {
   const router = useRouter();
+  const [status, setStatus] = useState<Status>("unloaded");
+  const [inputErr, setInputErr] = useState<boolean>(false);
+
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -33,16 +41,33 @@ const Login = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setStatus("loading");
       const { data } = await axios.post("/api/users/login", {
         email: values.email,
         password: values.password,
       });
-      alert(JSON.stringify(data, null, 2));
+      setStatus("loaded");
+      if (!data.message) {
+        /* setInputErr(false); */
+        router.push("/u/dashboard");
+      }
+      setInputErr(true);
+      /* alert(JSON.stringify(data, null, 2)); */
     },
   });
 
   return (
     <>
+      {inputErr && (
+        <Alert
+          variant="filled"
+          severity="error"
+          sx={{ position: "absolute", top: "65px", left: "12px", zIndex: 10 }}
+        >
+          It is either email or password is wrong — check it out!
+        </Alert>
+      )}
+
       <ButtonAppBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -106,6 +131,13 @@ const Login = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
+              {status === "loading" ? (
+                <CircularProgress
+                  size={24}
+                  color="warning"
+                  sx={{ marginRight: "10px" }}
+                />
+              ) : null}
               Sign In
             </Button>
             <Grid container>
