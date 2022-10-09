@@ -18,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
+import axios from "axios";
 
 const SignUp: NextPage = () => {
   const validationSchema = yup.object({
@@ -38,8 +39,15 @@ const SignUp: NextPage = () => {
       membership: "student",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const { data } = await axios.post("api/users/signup", {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+        isTeacher: values.membership === "teacher" ? true : false,
+      });
+      alert(JSON.stringify(data, null, 2));
     },
   });
   return (

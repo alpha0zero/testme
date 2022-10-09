@@ -1,4 +1,3 @@
-import { FormEvent } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,8 +14,11 @@ import ButtonAppBar from "../components/AppBar";
 import Link from "next/link";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -30,8 +32,12 @@ const Login = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const { data } = await axios.post("/api/users/login", {
+        email: values.email,
+        password: values.password,
+      });
+      alert(JSON.stringify(data, null, 2));
     },
   });
 
