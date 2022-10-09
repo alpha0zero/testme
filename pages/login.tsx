@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
 
-type Status = "loading" | "loaded" | "unloaded";
+export type Status = "loading" | "loaded" | "unloaded";
 
 const Login = () => {
   const router = useRouter();
@@ -60,17 +60,15 @@ const Login = () => {
 
   return (
     <>
+      <ButtonAppBar />
       {inputErr && (
         <Alert
-          variant="filled"
           severity="error"
-          sx={{ position: "absolute", top: "65px", left: "12px", zIndex: 10 }}
+          sx={{ position: "absolute", top: "75px", left: "12px", zIndex: 10 }}
         >
           It is either email or password is wrong — check it out!
         </Alert>
       )}
-
-      <ButtonAppBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

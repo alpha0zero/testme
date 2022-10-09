@@ -19,8 +19,16 @@ import FormLabel from "@mui/material/FormLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import axios from "axios";
+import { useState } from "react";
+import { Status } from "./login";
+import { useRouter } from "next/router";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
 
 const SignUp: NextPage = () => {
+  const [status, setStatus] = useState<Status>("unloaded");
+  const [err, setErr] = useState<boolean>(false);
+  const router = useRouter();
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -40,6 +48,7 @@ const SignUp: NextPage = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setStatus("loading");
       const { data } = await axios.post("api/users/signup", {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -47,11 +56,25 @@ const SignUp: NextPage = () => {
         password: values.password,
         isTeacher: values.membership === "teacher" ? true : false,
       });
-      alert(JSON.stringify(data, null, 2));
+      setStatus("loaded");
+      if (data.message) {
+        setErr(true);
+      } else {
+        setErr(false);
+        router.push("/u/dashboard");
+      }
     },
   });
   return (
     <>
+      {err && (
+        <Alert
+          severity="error"
+          sx={{ position: "absolute", top: "75px", left: "12px", zIndex: 10 }}
+        >
+          Email already existing
+        </Alert>
+      )}
       <ButtonAppBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -174,6 +197,13 @@ const SignUp: NextPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
+              {status === "loading" ? (
+                <CircularProgress
+                  size={24}
+                  color="warning"
+                  sx={{ marginRight: "10px" }}
+                />
+              ) : null}
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">

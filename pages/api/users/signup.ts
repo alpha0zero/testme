@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader("Set-Cookie", serialised);
     res.json({ token, createdUser });
   } catch (_) {
-    res.end("something went wrong");
+    res.json({ message: "User already created" });
   }
 };
 
