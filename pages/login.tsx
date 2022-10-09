@@ -50,8 +50,10 @@ const Login = () => {
       if (!data.message) {
         setInputErr(false);
         router.push("/u/dashboard");
+      } else {
+        setInputErr(true);
       }
-      setInputErr(true);
+
       /* alert(JSON.stringify(data, null, 2)); */
     },
   });
