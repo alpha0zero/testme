@@ -48,7 +48,7 @@ const Login = () => {
       });
       setStatus("loaded");
       if (!data.message) {
-        /* setInputErr(false); */
+        setInputErr(false);
         router.push("/u/dashboard");
       }
       setInputErr(true);
