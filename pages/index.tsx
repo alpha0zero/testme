@@ -79,6 +79,8 @@ const Home: NextPage = ({ user }: any) => {
             {user && (
               <Badge badgeContent="current" color="primary">
                 <Chip
+                  clickable
+                  color="secondary"
                   label={`${user.firstName} ${user.lastName}`}
                   variant="outlined"
                 />
