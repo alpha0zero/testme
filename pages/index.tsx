@@ -5,11 +5,15 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import Link from "next/link";
+import { useState } from "react";
+import { Status } from "./login";
 
 const Home: NextPage = () => {
+  const [status, setStatus] = useState<Status>("unloaded");
   return (
     <>
-      <DrawerAppBar />
+      <DrawerAppBar status={status} />
       <Box
         sx={{
           pt: 8,
@@ -21,15 +25,17 @@ const Home: NextPage = () => {
       >
         <Container maxWidth="sm">
           <Typography
-            style={{
+            /* style={{
               fontWeight: "bold",
-              background: "linear-gradient(to right, #30CFD0 0%, #330867 100%)",
+              background: textGradient,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-            }}
+            }} */
+
             component="h1"
-            variant="h2"
+            variant="h1"
             align="center"
+            color="secondary"
             gutterBottom
           >
             Test me.
@@ -45,8 +51,15 @@ const Home: NextPage = () => {
             spacing={2}
             justifyContent="center"
           >
-            <Button variant="contained">Create tests</Button>
-            <Button variant="outlined">Assist to tests</Button>
+            <Link href="/u/dashboard">
+              <Button
+                onClick={() => setStatus("loading")}
+                variant="contained"
+                color="secondary"
+              >
+                Create/assist tests
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>

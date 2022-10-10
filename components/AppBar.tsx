@@ -1,15 +1,16 @@
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import LinearProgress from "@mui/material/LinearProgress";
+import { Status } from "../pages/login";
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({ status }: { status: Status }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="secondary">
         <Toolbar>
           <Link href="/">
             <Typography
@@ -37,6 +38,7 @@ export default function ButtonAppBar() {
             </Button>
           </Link>
         </Toolbar>
+        {status !== "loaded" ? null : <LinearProgress />}
       </AppBar>
     </Box>
   );

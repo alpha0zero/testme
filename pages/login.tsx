@@ -60,15 +60,7 @@ const Login = () => {
 
   return (
     <>
-      <ButtonAppBar />
-      {inputErr && (
-        <Alert
-          severity="error"
-          sx={{ position: "absolute", top: "75px", left: "12px", zIndex: 10 }}
-        >
-          It is either email or password is wrong — check it out!
-        </Alert>
-      )}
+      <ButtonAppBar status={status} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -91,6 +83,11 @@ const Login = () => {
             noValidate
             sx={{ mt: 1 }}
           >
+            {inputErr && (
+              <Alert severity="error">
+                It is either email or password is wrong — check it out!
+              </Alert>
+            )}
             <TextField
               value={formik.values.email}
               onChange={formik.handleChange}

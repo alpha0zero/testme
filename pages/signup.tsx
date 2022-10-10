@@ -67,15 +67,7 @@ const SignUp: NextPage = () => {
   });
   return (
     <>
-      {err && (
-        <Alert
-          severity="error"
-          sx={{ position: "absolute", top: "75px", left: "12px", zIndex: 10 }}
-        >
-          Email already existing
-        </Alert>
-      )}
-      <ButtonAppBar />
+      <ButtonAppBar status={status} />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -101,6 +93,7 @@ const SignUp: NextPage = () => {
             noValidate
             sx={{ mt: 3 }}
           >
+            {err && <Alert severity="error">Email already existing</Alert>}
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
