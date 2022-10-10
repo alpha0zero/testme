@@ -7,9 +7,11 @@ import { cyan } from "@mui/material/colors";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#00897b",
+      main: "#0C1B33",
     },
-    secondary: cyan,
+    secondary: {
+      main: "#B2AA8E",
+    },
   },
 });
 

@@ -8,8 +8,28 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import { useState } from "react";
 import { Status } from "./login";
+import jwt from "jsonwebtoken";
+import Chip from "@mui/material/Chip";
+import Badge from "@mui/material/Badge";
+/* import Image from "next/image"; */
 
-const Home: NextPage = () => {
+export const getServerSideProps = (ctx: any) => {
+  const cookie = ctx.req.cookies["token"];
+  try {
+    const user = jwt.verify(cookie, process.env.SECRET as string);
+    return {
+      props: { user },
+    };
+  } catch (e) {
+    return {
+      props: {
+        message: "no user",
+      },
+    };
+  }
+};
+
+const Home: NextPage = ({ user }: any) => {
   const [status, setStatus] = useState<Status>("unloaded");
   return (
     <>
@@ -23,34 +43,48 @@ const Home: NextPage = () => {
           alignItems: "center",
         }}
       >
-        <Container maxWidth="sm">
-          <Typography
-            /* style={{
-              fontWeight: "bold",
-              background: textGradient,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }} */
-
-            component="h1"
-            variant="h1"
-            align="center"
-            color="secondary"
-            gutterBottom
-          >
-            Test me.
-          </Typography>
-          <Typography variant="h5" align="center" paragraph>
-            A fast way to create test for your students. talk to everyone with
-            our real time chat. take tests as fast as possible. tests made easy
-            with our plateform.
-          </Typography>
+        <Container>
+          {/* <Box sx={{ display: "flex" }}>
+            <Box>
+              <Typography
+                component="h1"
+                variant="h1"
+                color="secondary"
+                gutterBottom
+              >
+                Test me.
+              </Typography>
+              <Typography variant="h5" paragraph>
+                A fast way to create test for your students. talk to everyone
+                with our real time chat. take tests as fast as possible. tests
+                made easy with our plateform.
+              </Typography>
+            </Box>
+            <Box display="(max-width: 768px) none">
+              <Image
+                src="/graphic.svg"
+                alt="landing svg"
+                width={1800}
+                height={650}
+                layout="intrinsic"
+              />
+            </Box>
+          </Box> */}
           <Stack
             sx={{ pt: 4 }}
             direction="row"
             spacing={2}
             justifyContent="center"
           >
+            {user && (
+              <Badge badgeContent="current" color="primary">
+                <Chip
+                  label={`${user.firstName} ${user.lastName}`}
+                  variant="outlined"
+                />
+              </Badge>
+            )}
+
             <Link href="/u/dashboard">
               <Button
                 onClick={() => setStatus("loading")}

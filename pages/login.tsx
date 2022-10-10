@@ -52,6 +52,7 @@ const Login = () => {
         router.push("/u/dashboard");
       } else {
         setInputErr(true);
+        setStatus("unloaded");
       }
 
       /* alert(JSON.stringify(data, null, 2)); */
@@ -116,12 +117,7 @@ const Login = () => {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={
-                <Checkbox value="remember" color="primary" name="remembered" />
-              }
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -138,11 +134,6 @@ const Login = () => {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <MuiLink href="#" variant="body2">
-                  Forgot password?
-                </MuiLink>
-              </Grid>
               <Grid item>
                 <Link href="/signup">
                   <MuiLink variant="body2" sx={{ cursor: "pointer" }}>
