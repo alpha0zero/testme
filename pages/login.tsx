@@ -19,6 +19,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 export type Status = "loading" | "loaded" | "unloaded";
 
@@ -26,6 +29,16 @@ const Login = () => {
   const router = useRouter();
   const [status, setStatus] = useState<Status>("unloaded");
   const [inputErr, setInputErr] = useState<boolean>(false);
+  const action = (
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={() => setInputErr(false)}
+    >
+      <CloseIcon fontSize="small" />
+    </IconButton>
+  );
 
   const validationSchema = yup.object({
     email: yup
@@ -84,11 +97,17 @@ const Login = () => {
             noValidate
             sx={{ mt: 1 }}
           >
-            {inputErr && (
-              <Alert severity="error">
+            <Snackbar
+              open={inputErr}
+              autoHideDuration={4000}
+              message="It is either email or password is wrong"
+              onClose={() => setInputErr(false)}
+              action={action}
+            >
+              <Alert onClose={() => setInputErr(false)} severity="error">
                 It is either email or password is wrong — check it out!
               </Alert>
-            )}
+            </Snackbar>
             <TextField
               value={formik.values.email}
               onChange={formik.handleChange}

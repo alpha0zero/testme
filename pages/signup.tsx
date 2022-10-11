@@ -24,11 +24,24 @@ import { Status } from "./login";
 import { useRouter } from "next/router";
 import CircularProgress from "@mui/material/CircularProgress";
 import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 
 const SignUp: NextPage = () => {
   const [status, setStatus] = useState<Status>("unloaded");
   const [err, setErr] = useState<boolean>(false);
   const router = useRouter();
+  const action = (
+    <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={() => setErr(false)}
+    >
+      <CloseIcon fontSize="small" />
+    </IconButton>
+  );
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -59,6 +72,7 @@ const SignUp: NextPage = () => {
       setStatus("loaded");
       if (data.message) {
         setErr(true);
+        setStatus("unloaded");
       } else {
         setErr(false);
         router.push("/u/dashboard");
@@ -93,7 +107,17 @@ const SignUp: NextPage = () => {
             noValidate
             sx={{ mt: 3 }}
           >
-            {err && <Alert severity="error">Email already existing</Alert>}
+            <Snackbar
+              open={err}
+              autoHideDuration={4000}
+              message="It is either email or password is wrong"
+              onClose={() => setErr(false)}
+              action={action}
+            >
+              <Alert onClose={() => setErr(false)} severity="error">
+                Email already taken!
+              </Alert>
+            </Snackbar>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
