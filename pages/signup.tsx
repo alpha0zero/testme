@@ -114,7 +114,11 @@ const SignUp: NextPage = () => {
               onClose={() => setErr(false)}
               action={action}
             >
-              <Alert onClose={() => setErr(false)} severity="error">
+              <Alert
+                onClose={() => setErr(false)}
+                severity="error"
+                variant="filled"
+              >
                 Email already taken!
               </Alert>
             </Snackbar>

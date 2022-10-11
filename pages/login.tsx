@@ -104,7 +104,11 @@ const Login = () => {
               onClose={() => setInputErr(false)}
               action={action}
             >
-              <Alert onClose={() => setInputErr(false)} severity="error">
+              <Alert
+                onClose={() => setInputErr(false)}
+                severity="error"
+                variant="filled"
+              >
                 It is either email or password is wrong — check it out!
               </Alert>
             </Snackbar>
