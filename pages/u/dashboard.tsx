@@ -1,4 +1,11 @@
+import DashboardNav from "../../components/DashboardNav";
+
 const Dashboard = () => {
-  return <h1>Dashboard</h1>;
+  return (
+    <>
+      <DashboardNav></DashboardNav>
+      <h1>Dashboard</h1>
+    </>
+  );
 };
 export default Dashboard;

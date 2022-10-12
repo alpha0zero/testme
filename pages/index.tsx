@@ -1,8 +1,6 @@
-import type { NextPage } from "next";
 import Button from "@mui/material/Button";
 import DrawerAppBar from "../components/AppBar";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Link from "next/link";
@@ -11,6 +9,7 @@ import { Status } from "./login";
 import jwt from "jsonwebtoken";
 import Chip from "@mui/material/Chip";
 import Badge from "@mui/material/Badge";
+import { User } from "@prisma/client";
 /* import Image from "next/image"; */
 
 export const getServerSideProps = (ctx: any) => {
@@ -29,7 +28,7 @@ export const getServerSideProps = (ctx: any) => {
   }
 };
 
-const Home: NextPage = ({ user }: any) => {
+const Home = ({ user }: { user: User }) => {
   const [status, setStatus] = useState<Status>("unloaded");
   return (
     <>
@@ -87,7 +86,7 @@ const Home: NextPage = ({ user }: any) => {
               </Badge>
             )}
 
-            <Link href="/u/dashboard">
+            <Link href={user ? "/u/dashboard" : "/login"}>
               <Button
                 onClick={() => setStatus("loading")}
                 variant="contained"
