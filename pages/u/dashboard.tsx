@@ -90,17 +90,17 @@ const Dashboard = ({ user }: { user: User }) => {
           />
         </Box>
         <Grid sx={{ marginTop: "15px" }} container spacing={5}>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Skeleton />
             <Skeleton animation="wave" />
             <Skeleton />
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Skeleton />
             <Skeleton animation="wave" />
             <Skeleton />
           </Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}>
             <Skeleton />
             <Skeleton animation="wave" />
             <Skeleton />
